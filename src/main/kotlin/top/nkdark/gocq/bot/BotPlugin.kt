@@ -51,6 +51,8 @@ abstract class BotPlugin {
 
     open fun onOtherClientStatusChangeNotice(bot: Bot, event: OtherClientStatusChangeNoticeEvent) = NotMatch
 
+    open fun onEssenceNotice(bot: Bot, event: EssenceNoticeEvent) = NotMatch
+
     companion object {
         const val MatchedAndBlock = 0
         const val Matched = 1

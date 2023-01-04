@@ -24,6 +24,7 @@ class EventHandler(private val applicationContext: ApplicationContext, private v
             "notice" -> handleNotice(bot, eventJson)
             "request" -> handleRequest(bot, eventJson)
 //            "meta_event" -> handleMeta(bot, eventJson)
+            else -> println(eventJson)
         }
     }
 
