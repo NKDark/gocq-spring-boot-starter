@@ -4,6 +4,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean
+import top.nkdark.gocq.bot.ApiHandler
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.ThreadPoolExecutor
@@ -14,15 +15,17 @@ class BotBean(val botProperties: BotProperties, val eventProperties: EventProper
 
     @Bean
     @ConditionalOnMissingBean
-    fun createExecutor(): ExecutorService {
-        return ThreadPoolExecutor(
+    fun createExecutor(): ExecutorService = ThreadPoolExecutor(
             eventProperties.corePoolSize,
             eventProperties.maxPoolSize,
             eventProperties.keepAliveTime,
             TimeUnit.MILLISECONDS,
             ArrayBlockingQueue(eventProperties.workQueueSize)
-        )
-    }
+    )
+
+    @Bean
+    @ConditionalOnMissingBean
+    fun createApiHandler(): ApiHandler = ApiHandler(botProperties)
 
 
     @Bean

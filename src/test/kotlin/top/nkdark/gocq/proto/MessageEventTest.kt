@@ -16,6 +16,7 @@ class MessageEventTest {
                 'sub_type': 'group',
                 'message_id': 2,
                 'user_id': 1,
+                'group_id': 6,
                 'message': 4,
                 'raw_message': 'raw_message',
                 'font': 0,
@@ -25,11 +26,11 @@ class MessageEventTest {
                               'sex': 'male',
                               'age': 3,
                               'card': 'card',
-                              'area': '?',
+                              'area': '?'
                           }
             }
             """.trimIndent()
-        val data = str.to<MessageEvent>()
+        val data = str.to<GroupMessageEvent>()
         println(data)
     }
 }
