@@ -159,3 +159,24 @@ enum class EMessageType(private val s: String) {
         return s
     }
 }
+
+enum class EGroupRequestType(private val s: String) {
+    Add("add"),
+    Invite("invite");
+
+    override fun toString(): String {
+        return s
+    }
+}
+
+enum class EGroupHonorType(private val s: String) {
+    Talkative("talkative"),
+    Performer("performer"),
+    Legend("legend"),
+    StrongNewbie("strong_newbie"),
+    Emotion("emotion");
+
+    override fun toString(): String {
+        return s
+    }
+}

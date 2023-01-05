@@ -110,7 +110,7 @@ data class GroupMemberInfoData(
     @JSONField(name = "card") val card: String,
     @JSONField(name = "sex") val sex: String,
     @JSONField(name = "age") val age: Int,
-    @JSONField(name = "area") val area: String,
+    @JSONField(name = "area") val area: String?,
     @JSONField(name = "join_time") val joinTime: Int,
     @JSONField(name = "last_sent_time") val lastSentTime: Int,
     @JSONField(name = "level") val level: Int,

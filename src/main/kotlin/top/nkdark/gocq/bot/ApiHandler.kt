@@ -82,7 +82,7 @@ class ApiHandler(private val botProperties: BotProperties) {
      * @return 结果
      */
 
-    fun sendApiMessage(botSession: WebSocketSession, action: ApiEnum, params: JSONObject): JSONObject {
+    fun sendApiMessage(botSession: WebSocketSession, action: ApiEnum, params: JSONObject?): JSONObject {
         val apiJson = constructApiJson(action, params)
         val echo = apiJson.getString("echo")
         val apiSender = ApiSender(botSession, botProperties.apiTimeout)
