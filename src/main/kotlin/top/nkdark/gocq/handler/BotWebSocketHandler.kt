@@ -14,11 +14,11 @@ import java.util.concurrent.ExecutorService
 
 @Component
 class BotWebSocketHandler(
-        private val botFactory: BotFactory,
-        private val apiHandler: ApiHandler,
-        private val eventHandler: EventHandler,
-        private val executor: ExecutorService,
-        private val botContainer: BotContainer,
+    private val botFactory: BotFactory,
+    private val apiHandler: ApiHandler,
+    private val eventHandler: EventHandler,
+    private val executor: ExecutorService,
+    private val botContainer: BotContainer,
 ) : TextWebSocketHandler() {
     private val log = LoggerFactory.getLogger(BotWebSocketHandler::class.java)
     override fun afterConnectionEstablished(session: WebSocketSession) {

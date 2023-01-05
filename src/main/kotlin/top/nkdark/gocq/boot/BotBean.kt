@@ -16,11 +16,11 @@ class BotBean(val botProperties: BotProperties, val eventProperties: EventProper
     @Bean
     @ConditionalOnMissingBean
     fun createExecutor(): ExecutorService = ThreadPoolExecutor(
-            eventProperties.corePoolSize,
-            eventProperties.maxPoolSize,
-            eventProperties.keepAliveTime,
-            TimeUnit.MILLISECONDS,
-            ArrayBlockingQueue(eventProperties.workQueueSize)
+        eventProperties.corePoolSize,
+        eventProperties.maxPoolSize,
+        eventProperties.keepAliveTime,
+        TimeUnit.MILLISECONDS,
+        ArrayBlockingQueue(eventProperties.workQueueSize)
     )
 
     @Bean

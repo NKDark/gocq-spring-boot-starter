@@ -17,7 +17,7 @@ abstract class BotPlugin {
 
     open fun onGroupMessage(bot: Bot, event: GroupMessageEvent) = NotMatch
 
-    open fun onGroupUploadNotice(bot: Bot, event: FileUploadNoticeEvent) = NotMatch
+    open fun onGroupUploadNotice(bot: Bot, event: GroupUploadNoticeEvent) = NotMatch
 
     open fun onGroupAdminChangeNotice(bot: Bot, event: GroupAdminChangeNoticeEvent) = NotMatch
 
@@ -45,13 +45,19 @@ abstract class BotPlugin {
 
     open fun onGroupHonorChangeNotice(bot: Bot, event: GroupHonorChangeNoticeEvent) = NotMatch
 
+    open fun onGroupTitleUpdateNotice(bot: Bot, event: GroupTitleUpdateNoticeEvent) = NotMatch
+
     open fun onGroupCardUpdateNotice(bot: Bot, event: GroupCardUpdateNoticeEvent) = NotMatch
 
-    open fun onReceivedOfflineFileNotice(bot: Bot, event: ReceivedOfflineFileNoticeEvent) = NotMatch
+    open fun onOfflineFileNotice(bot: Bot, event: OfflineFileNoticeEvent) = NotMatch
 
-    open fun onOtherClientStatusChangeNotice(bot: Bot, event: OtherClientStatusChangeNoticeEvent) = NotMatch
+    open fun onOtherClientStatusChangeNotice(bot: Bot, event: ClientStatusChangeNoticeEvent) = NotMatch
 
     open fun onEssenceNotice(bot: Bot, event: EssenceNoticeEvent) = NotMatch
+
+    open fun onHeartbeatMeta(bot: Bot, event: HeartbeatMetaEvent) = NotMatch
+
+    open fun onLifecycleMeta(bot: Bot, event: LifecycleMetaEvent) = NotMatch
 
     companion object {
         const val MatchedAndBlock = 0

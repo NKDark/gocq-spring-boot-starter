@@ -8,4 +8,4 @@ data class EventProperties(
     var maxPoolSize: Int = 10,
     var keepAliveTime: Long = 2000,
     var workQueueSize: Int = 512,
-    )
+)

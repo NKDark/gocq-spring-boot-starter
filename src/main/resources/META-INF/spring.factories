@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+top.nkdark.gocq.boot.AutoConfiguration
+
+org.springframework.context.ApplicationListener=\
+top.nkdark.gocq.boot.BannerApplicationListener

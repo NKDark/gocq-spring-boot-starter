@@ -2,6 +2,7 @@ package top.nkdark.gocq
 
 import org.junit.jupiter.api.Test
 import com.alibaba.fastjson2.*
+import top.nkdark.gocq.proto.ApiData
 
 class ApiDataTest {
 
