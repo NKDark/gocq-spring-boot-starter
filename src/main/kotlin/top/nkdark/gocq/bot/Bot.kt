@@ -431,6 +431,399 @@ interface Bot {
             .to(object : TypeReference<ApiData<OCRRespData>>() {})
     }
 
+    fun getGroupSystemMsg(): ApiData<GroupSystemMsgData> {
+        val action = ApiEnum.GET_GROUP_SYSTEM_MSG
+
+        return apiHandler.sendApiMessage(botSession, action, null)
+            .to(object : TypeReference<ApiData<OCRRespData>>() {})
+    }
+
+    /**
+     * 上传私聊文件
+     *
+     * 只能上传本地文件, 需要上传 http 文件的话请先调用 download_file API下载
+     *
+     * @param userId 对方 QQ 号
+     * @param file   本地文件路径
+     * @param name   文件名称
+     */
+    fun uploadPrivateFile(userId: Long, file: String, name: String): ApiRawData {
+        val action = ApiEnum.UPLOAD_PRIVATE_FILE
+
+        val params = JSONObject()
+        params["user_id"] = userId
+        params["file"] = file
+        params["name"] = name
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    /**
+     * 上传群文件
+     *
+     * 在不提供 folder 参数的情况下默认上传到根目录
+     *
+     * 只能上传本地文件, 需要上传 http 文件的话请先调用 download_file API下载
+     *
+     * @param groupId   群号
+     * @param file      本地文件路径
+     * @param name      文件名称
+     * @param folder    父目录ID
+     */
+    fun uploadGroupFile(groupId: Long, file: String, name: String, folder: String?): ApiRawData {
+        val action = ApiEnum.UPLOAD_GROUP_FILE
+
+        val params = JSONObject()
+        params["group_id"] = groupId
+        params["file"] = file
+        params["name"] = name
+        params["folder"] = folder
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    /**
+     * 获取群文件系统信息
+     *
+     * @param groupId   群号
+     */
+    fun getGroupFileSystemInfo(groupId: Long): ApiData<GroupFileSystemInfoData> {
+        val action = ApiEnum.GET_GROUP_FILE_SYSTEM_INFO
+
+        val params = JSONObject()
+        params["group_id"] = groupId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiData<GroupFileSystemInfoData>>() {})
+    }
+
+    /**
+     * 获取群根目录文件列表
+     *
+     * @param groupId   群号
+     */
+    fun getGroupRootFiles(groupId: Long): ApiData<GroupFilesData> {
+        val action = ApiEnum.GET_GROUP_ROOT_FILES
+
+        val params = JSONObject()
+        params["group_id"] = groupId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiData<GroupFilesData>>() {})
+    }
+
+    /**
+     * 获取群子目录文件列表
+     *
+     * @param groupId   群号
+     * @param folderId  文件夹ID 参考 Folder 对象
+     */
+    fun getGroupFilesByFolder(groupId: Long, folderId: String): ApiData<GroupFilesData> {
+        val action = ApiEnum.GET_GROUP_FILES_BY_FOLDER
+
+        val params = JSONObject()
+        params["group_id"] = groupId
+        params["folder_id"] = folderId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiData<GroupFilesData>>() {})
+    }
+
+    /**
+     * 创建群文件文件夹
+     *
+     * 仅能在根目录创建文件夹
+     *
+     * @param groupId   群号
+     * @param name      文件名称
+     * @param parentId  仅能为 /
+     */
+    fun createGroupFileFolder(groupId: Long, name: String, parentId: String): ApiRawData {
+        val action = ApiEnum.CREATE_GROUP_FILE_FOLDER
+
+        val params = JSONObject()
+        params["group_id"] = groupId
+        params["name"] = name
+        params["parent_id"] = parentId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    /**
+     * 删除群文件文件夹
+     *
+     * @param groupId  群号
+     * @param folderId 文件夹ID 参考 Folder 对象
+     */
+    fun deleteGroupFolder(groupId: Long, folderId: String): ApiRawData {
+        val action = ApiEnum.DELETE_GROUP_FOLDER
+
+        val params = JSONObject()
+        params["group_id"] = groupId
+        params["folder_id"] = folderId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    /**
+     * 删除群文件
+     *
+     * @param groupId 群号
+     * @param fileId  文件夹ID 参考 File 对象
+     * @param busid   文件类型 参考 File 对象
+     */
+    fun deleteGroupFile(groupId: Long, fileId: String, busid: Int): ApiRawData {
+        val action = ApiEnum.DELETE_GROUP_FILE
+
+        val params = JSONObject()
+        params["group_id"] = groupId
+        params["file_id"] = fileId
+        params["busid"] = busid
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    /**
+     * 获取群文件资源链接
+     *
+     * @param groupId 群号
+     * @param fileId  文件夹ID 参考 File 对象
+     * @param busid   文件类型 参考 File 对象
+     */
+    fun getGroupFileUrl(groupId: Long, fileId: String, busid: String): ApiData<UrlData> {
+        val action = ApiEnum.GET_GROUP_FILE_URL
+
+        val params = JSONObject()
+        params["group_id"] = groupId
+        params["file_id"] = fileId
+        params["busid"] = busid
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiData<UrlData>>() {})
+    }
+
+    /**
+     * 获取状态
+     */
+    fun getStatus(): ApiData<StatusData> {
+        val action = ApiEnum.GET_STATUS
+
+        return apiHandler.sendApiMessage(botSession, action, null)
+            .to(object : TypeReference<ApiData<StatusData>>() {})
+    }
+
+    /**
+     * 获取群文件资源链接
+     *
+     * @param groupId 群号
+     */
+    fun getGroupAtAllRemain(groupId: Long): ApiData<GroupAtAllRemainRespData> {
+        val action = ApiEnum.GET_GROUP_AT_ALL_REMAIN
+
+        val params = JSONObject()
+        params["group_id"] = groupId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiData<GroupAtAllRemainRespData>>() {})
+    }
+
+    /**
+     * 发送群公告
+     *
+     * @param groupId 群号
+     * @param content 公告内容
+     * @param image   图片路径（可选）
+     */
+    fun sendGroupNotice(groupId: Long, content: String, image: String?): ApiRawData {
+        val action = ApiEnum.SEND_GROUP_NOTICE
+
+        val params = JSONObject()
+        params["group_id"] = groupId
+        params["content"] = content
+        params["image"] = image
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    /**
+     * 获取群公告
+     *
+     * @param groupId 群号
+     */
+    fun getGroupNotice(groupId: Long): ApiListData<GroupNoticeRespData> {
+        val action = ApiEnum.GET_GROUP_NOTICE
+
+        val params = JSONObject()
+        params["group_id"] = groupId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiListData<GroupNoticeRespData>>() {})
+    }
+
+    /**
+     * 重载事件过滤器
+     *
+     * @param file 事件过滤器文件
+     */
+    fun reloadEventFilter(file: String): ApiRawData {
+        val action = ApiEnum.RELOAD_EVENT_FILTER
+
+        val params = JSONObject()
+        params["file"] = file
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    /**
+     * 下载文件到缓存目录
+     *
+     * @param url           链接地址
+     * @param threadCount   下载线程数
+     * @param headers       自定义请求头
+     */
+    fun downloadFile(url: String, threadCount: Int, headers: String): ApiData<DownloadFileRespData> {
+        val action = ApiEnum.DOWNLOAD_FILE
+
+        val params = JSONObject()
+        params["url"] = url
+        params["thread_count"] = threadCount
+        params["headers"] = headers
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiData<DownloadFileRespData>>() {})
+    }
+
+    fun downloadFile(url: String, threadCount: Int, headers: JSONObject): ApiData<DownloadFileRespData> {
+        val list = headers.map { "${it.key}=${it.value}" }.toList()
+        return downloadFile(url, threadCount, list)
+    }
+
+    fun downloadFile(url: String, threadCount: Int, headers: Map<String, String>): ApiData<DownloadFileRespData> {
+        val list = headers.map { "${it.key}=${it.value}" }.toList()
+        return downloadFile(url, threadCount, list)
+    }
+
+    fun downloadFile(url: String, threadCount: Int, headers: List<String>): ApiData<DownloadFileRespData> {
+        val reduce = headers.reduce { self, that -> "$self\r\n$that" }
+        return downloadFile(url, threadCount, reduce)
+    }
+
+    /**
+     * 获取当前账号在线客户端列表
+     *
+     * @param noCache 是否无视缓存
+     */
+    fun getOnlineClients(noCache: Boolean): ApiData<OnlineClientsData> {
+        val action = ApiEnum.GET_ONLINE_CLIENTS
+
+        val params = JSONObject()
+        params["no_cache"] = noCache
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiData<OnlineClientsData>>() {})
+    }
+
+    /**
+     * 获取群消息历史记录
+     *
+     * @param messageSeq 起始消息序号, 可通过 get_msg 获得
+     * @param groupId    群号
+     *
+     * @return 从起始序号开始的前19条消息 不提供起始序号将默认获取最新的消息
+     */
+    fun getGroupMsgHistory(messageSeq: Long?, groupId: Long): ApiData<GroupMsgHistoryData> {
+        val action = ApiEnum.GET_GROUP_MSG_HISTORY
+
+        val params = JSONObject()
+        params["message_seq"] = messageSeq
+        params["group_id"] = groupId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiData<GroupMsgHistoryData>>() {})
+    }
+
+    /**
+     * 设置精华消息
+     *
+     * @param messageId 消息ID
+     */
+    fun setEssenceMsg(messageId: Int): ApiRawData {
+        val action = ApiEnum.SET_ESSENCE_MSG
+
+        val params = JSONObject()
+        params["message_id"] = messageId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    /**
+     * 移出精华消息
+     *
+     * @param messageId 消息ID
+     */
+    fun deleteEssenceMsg(messageId: Int): ApiRawData {
+        val action = ApiEnum.DELETE_ESSENCE_MSG
+
+        val params = JSONObject()
+        params["message_id"] = messageId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    /**
+     * 获取精华消息列表
+     *
+     * @param groupId 群号
+     */
+    fun getEssenceMsgList(groupId: Long): ApiListData<EssenceMsgData> {
+        val action = ApiEnum.GET_ESSENCE_MSG_LIST
+
+        val params = JSONObject()
+        params["group_id"] = groupId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiListData<EssenceMsgData>>() {})
+    }
+
+    /**
+     * 检查链接安全性
+     *
+     * @param url 需要检查的链接
+     */
+    fun checkUrlSafely(url: Long): ApiData<UrlSafetyData> {
+        val action = ApiEnum.CHECK_URL_SAFELY
+
+        val params = JSONObject()
+        params["url"] = url
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiData<UrlSafetyData>>() {})
+    }
+
+    /**
+     * 获取在线机型
+     *
+     * @param model 机型名称
+     */
+    fun getModelShow(model: String): ApiListData<ModelShowRespData> {
+        val action = ApiEnum.GET_MODEL_SHOW
+
+        val params = JSONObject()
+        params["model"] = model
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiListData<ModelShowRespData>>() {})
+    }
+
     fun sendPrivateForwardMsg(userId: Long, messages: String): ApiData<MessageRespData>? {
         val action = ApiEnum.SEND_PRIVATE_FORWARD_MSG
 

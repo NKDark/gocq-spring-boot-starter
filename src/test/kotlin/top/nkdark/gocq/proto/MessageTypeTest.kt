@@ -1,12 +1,14 @@
 package top.nkdark.gocq.proto
 
+import com.alibaba.fastjson2.toJSONString
 import org.junit.jupiter.api.Test
 
 class MessageTypeTest {
     @Test
     fun test_deMessageType() {
-        val str = "{'message_type': 'private'}"
         val mt = MessageType("private")
-        println(mt)
+        val mtJsonStr = mt.toJSONString()
+        assert("private" == mt.toString())
+        assert("{}" == mtJsonStr)
     }
 }
