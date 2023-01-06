@@ -184,7 +184,6 @@ class EventHandler(private val applicationContext: ApplicationContext, private v
 
             "poke" -> handlePoke(bot, eventJson)
 
-
             "lucky_king" -> {
                 val event = eventJson.toJSONString().to<GroupLuckyKingChangeNoticeEvent>()
                 botProperties.pluginList.forEach { pluginClass ->
