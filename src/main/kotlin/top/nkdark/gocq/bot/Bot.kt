@@ -5,8 +5,10 @@ package top.nkdark.gocq.bot
 import com.alibaba.fastjson2.JSONObject
 import com.alibaba.fastjson2.TypeReference
 import com.alibaba.fastjson2.to
+import org.slf4j.Logger
 import org.springframework.web.socket.WebSocketSession
 import top.nkdark.gocq.proto.*
+import top.nkdark.gocq.proto.guild.*
 import java.io.IOException
 
 
@@ -14,6 +16,8 @@ interface Bot {
     val selfId: Long
     var botSession: WebSocketSession
     var apiHandler: ApiHandler
+
+    val log: Logger
 
     fun sendPrivateMsg(userId: Long, message: String, autoEscape: Boolean = false): ApiData<MessageRespData>? {
         val action = ApiEnum.SEND_PRIVATE_MSG
@@ -56,7 +60,7 @@ interface Bot {
         groupId: Long?,
         message: String,
         autoEscape: Boolean = false,
-    ): ApiData<MessageRespData>? {
+    ): ApiData<MessageRespData> {
         val action = ApiEnum.SEND_MSG
 
         val params = JSONObject()
@@ -81,7 +85,7 @@ interface Bot {
     }
 
     fun getMsg(messageId: Int): ApiData<MessageData> {
-        val action = ApiEnum.DELETE_MSG
+        val action = ApiEnum.GET_MSG
 
         val params = JSONObject()
         params["message_id"] = messageId
@@ -91,7 +95,7 @@ interface Bot {
     }
 
     fun getForwardMsg(messageId: Int): ApiListData<Message> {
-        val action = ApiEnum.DELETE_MSG
+        val action = ApiEnum.GET_FORWARD_MSG
 
         val params = JSONObject()
         params["message_id"] = messageId
@@ -132,7 +136,7 @@ interface Bot {
             .to(object : TypeReference<ApiRawData>() {})
     }
 
-    fun setGroupBan(groupId: Long, userId: Long, duration: Int = 30 * 60): ApiRawData? {
+    fun setGroupBan(groupId: Long, userId: Long, duration: Int = 30 * 60): ApiRawData {
         val action = ApiEnum.SET_GROUP_BAN
 
         val params = JSONObject()
@@ -158,6 +162,29 @@ interface Bot {
         params["anonymous"] = anonymous
         params["anonymous_flag"] = anonymousFlag
         params["duration"] = duration
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    fun setGroupWholeBan(groupId: Long, enable: Boolean = true): ApiRawData {
+        val action = ApiEnum.SET_GROUP_WHOLE_BAN
+
+        val params = JSONObject()
+        params["group_id"] = groupId
+        params["enable"] = enable
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    fun setGroupAdmin(groupId: Long, userId: Long, enable: Boolean = true): ApiRawData {
+        val action = ApiEnum.SET_GROUP_ADMIN
+
+        val params = JSONObject()
+        params["group_id"] = groupId
+        params["user_id"] = userId
+        params["enable"] = enable
 
         return apiHandler.sendApiMessage(botSession, action, params)
             .to(object : TypeReference<ApiRawData>() {})
@@ -295,14 +322,14 @@ interface Bot {
             .to(object : TypeReference<ApiData<StrangerInfoData>>() {})
     }
 
-    fun getFriendList(): ApiListData<FriendInfoData>? {
-        val action = ApiEnum.GET_STRANGER_INFO
+    fun getFriendList(): ApiListData<FriendInfoData> {
+        val action = ApiEnum.GET_FRIEND_LIST
 
         return apiHandler.sendApiMessage(botSession, action, null)
             .to(object : TypeReference<ApiListData<FriendInfoData>>() {})
     }
 
-    fun getUnidirectionalFriendList(): ApiData<UnidirectionalFriendInfoData>? {
+    fun getUnidirectionalFriendList(): ApiData<UnidirectionalFriendInfoData> {
         val action = ApiEnum.GET_UNIDIRECTIONAL_FRIEND_LIST
 
         return apiHandler.sendApiMessage(botSession, action, null)
@@ -393,7 +420,7 @@ interface Bot {
     }
 
     fun setRestart(delay: Long = 0): ApiRawData {
-        val action = ApiEnum.GET_VERSION_INFO
+        val action = ApiEnum.SET_RESTART
 
         val params = JSONObject()
         params["delay"] = delay
@@ -829,8 +856,10 @@ interface Bot {
      *
      * [示例](https://github.com/Mrs4s/go-cqhttp/pull/872#issuecomment-831180149)
      *
+     * [可能不好使](https://github.com/Mrs4s/go-cqhttp/pull/872#issuecomment-1249986232)，未测试
+     *
      * @param model     机型名称
-     * @param modelShow -
+     * @param modelShow
      */
     fun setModelShow(model: String, modelShow: String): ApiRawData {
         val action = ApiEnum.SET_MODEL_SHOW
@@ -858,7 +887,7 @@ interface Bot {
             .to(object : TypeReference<ApiRawData>() {})
     }
 
-    fun sendPrivateForwardMsg(userId: Long, messages: String): ApiData<MessageRespData>? {
+    fun sendPrivateForwardMsg(userId: Long, messages: String): ApiData<MessageRespData> {
         val action = ApiEnum.SEND_PRIVATE_FORWARD_MSG
 
         val params = JSONObject()
@@ -867,6 +896,99 @@ interface Bot {
 
         return apiHandler.sendApiMessage(botSession, action, params)
             .to(object : TypeReference<ApiData<MessageRespData>>() {})
+    }
+
+    fun getGuildServiceProfile(): ApiData<GuildServiceProfileData> {
+        val action = ApiEnum.GET_GUILD_SERVICE_PROFILE
+
+        return apiHandler.sendApiMessage(botSession, action, null)
+            .to(object : TypeReference<ApiData<GuildServiceProfileData>>() {})
+    }
+
+    fun getGuildList(): ApiListData<GuildInfoData>? {
+        val action = ApiEnum.GET_GUILD_LIST
+
+        apiHandler.sendApiMessage(botSession, action, null)
+            .let {
+                return if (it.containsKey("data")) it.to(object :
+                    TypeReference<ApiListData<GuildServiceProfileData>>() {}) else null
+            }
+    }
+
+    fun getGuildMetaByGuest(guildId: String): ApiData<GuildMetaByGuildData> {
+        val action = ApiEnum.GET_GUILD_META_BY_GUEST
+
+        val params = JSONObject()
+        params["guild_id"] = guildId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiData<GuildMetaByGuildData>>() {})
+    }
+
+    fun getGuildChannelList(guildId: String, noCache: Boolean): ApiListData<GuildServiceProfileData>? {
+        val action = ApiEnum.GET_GUILD_CHANNEL_LIST
+
+        val params = JSONObject()
+        params["guild_id"] = guildId
+        params["no_cache"] = noCache
+
+        apiHandler.sendApiMessage(botSession, action, params)
+            .let {
+                return if (it.containsKey("data")) it.to(object :
+                    TypeReference<ApiListData<GuildServiceProfileData>>() {}) else null
+            }
+    }
+
+    fun getGuildMemberList(guildId: String, nextToken: String?): ApiData<GuildMetaByGuildData> {
+        val action = ApiEnum.GET_GUILD_MEMBER_LIST
+
+        val params = JSONObject()
+        params["guild_id"] = guildId
+        params["next_token"] = nextToken
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiData<GuildMetaByGuildData>>() {})
+    }
+
+    fun getGuildMemberProfile(guildId: String, userId: String): ApiData<GuildMemberProfileData> {
+        val action = ApiEnum.GET_GUILD_MEMBER_PROFILE
+
+        val params = JSONObject()
+        params["guild_id"] = guildId
+        params["user_id"] = userId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiData<GuildMemberProfileData>>() {})
+    }
+
+    fun sendGuildChannelMsg(guildId: String, channelId: String, message: String): ApiData<GuildMessageRespData> {
+        val action = ApiEnum.SEND_GUILD_CHANNEL_MSG
+
+        val params = JSONObject()
+        params["guild_id"] = guildId
+        params["channel_id"] = channelId
+        params["message"] = message
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiData<GuildMessageRespData>>() {})
+    }
+
+    fun getTopicChannelFeeds(guildId: String, channelId: String): ApiRawData? {
+        val action = ApiEnum.GET_TOPIC_CHANNEL_FEEDS
+
+        val params = JSONObject()
+        params["guild_id"] = guildId
+        params["channel_id"] = channelId
+
+        apiHandler.sendApiMessage(botSession, action, params)
+            .let {
+                return if (it["retdata"] == 0) {
+                    it.to(object : TypeReference<ApiRawData>() {})
+                } else {
+                    log.error("getTopicChannelFeeds failed cause: ${it["msg"]}")
+                    null
+                }
+            }
     }
 
     @Throws(IOException::class, InterruptedException::class)

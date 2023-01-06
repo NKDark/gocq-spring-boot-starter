@@ -153,4 +153,23 @@ enum class ApiEnum(val endpoint: String, val description: String) {
      */
     DELETE_UNIDIRECTIONAL_FRIEND("delete_unidirectional_friend", "删除单向好友"),
     SEND_PRIVATE_FORWARD_MSG("send_private_forward_msg", "发送合并转发 ( 好友 )"),
+
+    //
+    // 频道API
+    //
+    GET_GUILD_SERVICE_PROFILE("get_guild_service_profile", "获取频道系统内BOT的资料"),
+    GET_GUILD_LIST("get_guild_list", "获取频道列表"),
+    GET_GUILD_META_BY_GUEST("get_guild_meta_by_guest", "通过访客获取频道元数据"),
+    GET_GUILD_CHANNEL_LIST("get_guild_channel_list", "获取子频道列表"),
+    GET_GUILD_MEMBER_LIST("get_guild_member_list", "获取频道成员列表"),
+    GET_GUILD_MEMBER_PROFILE("get_guild_member_profile", "单独获取频道成员信息"),
+    SEND_GUILD_CHANNEL_MSG("send_guild_channel_msg", "发送信息到子频道"),
+    GET_TOPIC_CHANNEL_FEEDS("get_topic_channel_feeds", "获取话题频道帖子"),
+    DELETE_GUILD_ROLE("delete_guild_role", "删除频道角色"),
+    GET_GUILD_MSG("get_guild_msg", "获取频道消息"),
+    GET_GUILD_ROLES("get_guild_roles", "获取频道角色列表"),
+    SET_GUILD_MEMBER_ROLE("set_guild_member_role", "设置用户在频道中的角色"),
+    UPDATE_GUILD_ROLE("update_guild_role", "修改频道角色"),
+    CREATE_GUILD_ROLE("create_guild_role", "创建频道角色"),
+
 }
