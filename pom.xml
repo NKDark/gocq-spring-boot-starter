@@ -10,12 +10,12 @@
     </parent>
     <groupId>top.nkdark</groupId>
     <artifactId>spring-gocq</artifactId>
-    <version>0.0.2</version>
+    <version>0.1.0</version>
     <name>spring-gocq</name>
     <description>spring-gocq</description>
     <properties>
         <java.version>1.8</java.version>
-        <kotlin.version>1.6.21</kotlin.version>
+        <kotlin.version>1.7.21</kotlin.version>
     </properties>
     <dependencies>
         <dependency>
