@@ -9,6 +9,7 @@ import top.nkdark.gocq.boot.BotProperties
 import top.nkdark.gocq.bot.Bot
 import top.nkdark.gocq.bot.BotPlugin
 import top.nkdark.gocq.proto.*
+import top.nkdark.gocq.proto.guild.*
 
 @Component
 class EventHandler(private val applicationContext: ApplicationContext, private val botProperties: BotProperties) {
@@ -46,6 +47,15 @@ class EventHandler(private val applicationContext: ApplicationContext, private v
                 val event = eventJson.toJSONString().to<GroupMessageEvent>()
                 botProperties.pluginList.forEach { pluginClass ->
                     if (getPlugin(pluginClass)?.onGroupMessage(bot, event) == BotPlugin.MatchedAndBlock) {
+                        return
+                    }
+                }
+            }
+
+            "guild" -> {
+                val event = eventJson.toJSONString().to<GuildMessageEvent>()
+                botProperties.pluginList.forEach { pluginClass ->
+                    if (getPlugin(pluginClass)?.onGuildMessage(bot, event) == BotPlugin.MatchedAndBlock) {
                         return
                     }
                 }
@@ -168,6 +178,42 @@ class EventHandler(private val applicationContext: ApplicationContext, private v
             }
 
             "notify" -> handleNotify(bot, eventJson)
+
+            "message_reactions_updated" -> {
+                val event = eventJson.toJSONString().to<MessageReactionsUpdatedNoticeEvent>()
+                botProperties.pluginList.forEach { pluginClass ->
+                    if (getPlugin(pluginClass)?.onMessageReactionsUpdatedNotice(bot, event) == BotPlugin.MatchedAndBlock) {
+                        return
+                    }
+                }
+            }
+
+            "channel_updated" -> {
+                val event = eventJson.toJSONString().to<ChannelUpdatedNoticeEvent>()
+                botProperties.pluginList.forEach { pluginClass ->
+                    if (getPlugin(pluginClass)?.onChannelUpdatedNotice(bot, event) == BotPlugin.MatchedAndBlock) {
+                        return
+                    }
+                }
+            }
+
+            "channel_created" -> {
+                val event = eventJson.toJSONString().to<ChannelCreatedNoticeEvent>()
+                botProperties.pluginList.forEach { pluginClass ->
+                    if (getPlugin(pluginClass)?.onChannelCreatedNotice(bot, event) == BotPlugin.MatchedAndBlock) {
+                        return
+                    }
+                }
+            }
+
+            "channel_destroyed" -> {
+                val event = eventJson.toJSONString().to<ChannelDestroyedNoticeEvent>()
+                botProperties.pluginList.forEach { pluginClass ->
+                    if (getPlugin(pluginClass)?.onChannelDestroyedNotice(bot, event) == BotPlugin.MatchedAndBlock) {
+                        return
+                    }
+                }
+            }
         }
     }
 

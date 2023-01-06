@@ -10,11 +10,11 @@ data class GuildMessageEvent(
     @JSONField(name = "message_id") val messageId: String,
     @JSONField(name = "message_type") val messageType: String,
     @JSONField(name = "post_type") val postType: String,
-    @JSONField(name = "self_id") val selfId: Int,
+    @JSONField(name = "self_id") val selfId: Long,
     @JSONField(name = "self_tiny_id") val selfTinyId: String,
     @JSONField(name = "sender") val sender: Sender,
     @JSONField(name = "sub_type") val subType: String,
-    @JSONField(name = "time") val time: Int,
+    @JSONField(name = "time") val time: Long,
     @JSONField(name = "user_id") val userId: String,
 )
 
@@ -32,9 +32,9 @@ data class MessageReactionsUpdatedNoticeEvent(
     @JSONField(name = "notice_type") val noticeType: String,
     @JSONField(name = "operator_id") val operatorId: String,
     @JSONField(name = "post_type") val postType: String,
-    @JSONField(name = "self_id") val selfId: Int,
+    @JSONField(name = "self_id") val selfId: Long,
     @JSONField(name = "self_tiny_id") val selfTinyId: String,
-    @JSONField(name = "time") val time: Int,
+    @JSONField(name = "time") val time: Long,
     @JSONField(name = "user_id") val userId: Int,
 )
 
@@ -55,9 +55,9 @@ data class ChannelUpdatedNoticeEvent(
     @JSONField(name = "old_info") val oldInfo: OldInfo,
     @JSONField(name = "operator_id") val operatorId: String,
     @JSONField(name = "post_type") val postType: String,
-    @JSONField(name = "self_id") val selfId: Int,
+    @JSONField(name = "self_id") val selfId: Long,
     @JSONField(name = "self_tiny_id") val selfTinyId: String,
-    @JSONField(name = "time") val time: Int,
+    @JSONField(name = "time") val time: Long,
     @JSONField(name = "user_id") val userId: Long,
 )
 
@@ -101,9 +101,9 @@ data class ChannelDestroyedNoticeEvent(
     @JSONField(name = "notice_type") val noticeType: String,
     @JSONField(name = "operator_id") val operatorId: String,
     @JSONField(name = "post_type") val postType: String,
-    @JSONField(name = "self_id") val selfId: Int,
+    @JSONField(name = "self_id") val selfId: Long,
     @JSONField(name = "self_tiny_id") val selfTinyId: String,
-    @JSONField(name = "time") val time: Int,
+    @JSONField(name = "time") val time: Long,
     @JSONField(name = "user_id") val userId: Long,
 )
 
@@ -111,7 +111,7 @@ data class ChannelInfo(
     @JSONField(name = "channel_id") val channelId: String,
     @JSONField(name = "channel_name") val channelName: String,
     @JSONField(name = "channel_type") val channelType: Int,
-    @JSONField(name = "create_time") val createTime: Int,
+    @JSONField(name = "create_time") val createTime: Long,
     @JSONField(name = "creator_tiny_id") val creatorTinyId: String,
     @JSONField(name = "current_slow_mode") val currentSlowMode: Int,
     @JSONField(name = "owner_guild_id") val ownerGuildId: String,
@@ -127,8 +127,8 @@ data class ChannelCreatedNoticeEvent(
     @JSONField(name = "notice_type") val noticeType: String,
     @JSONField(name = "operator_id") val operatorId: String,
     @JSONField(name = "post_type") val postType: String,
-    @JSONField(name = "self_id") val selfId: Int,
+    @JSONField(name = "self_id") val selfId: Long,
     @JSONField(name = "self_tiny_id") val selfTinyId: String,
-    @JSONField(name = "time") val time: Int,
+    @JSONField(name = "time") val time: Long,
     @JSONField(name = "user_id") val userId: Long,
 )

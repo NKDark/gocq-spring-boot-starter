@@ -1,6 +1,7 @@
 package top.nkdark.gocq.bot
 
 import top.nkdark.gocq.proto.*
+import top.nkdark.gocq.proto.guild.*
 
 abstract class BotPlugin {
     /**
@@ -10,7 +11,6 @@ abstract class BotPlugin {
      * @param   event   事件内容
      * @return  消息是否处理完毕,
      *          `MatchedAndBlock`表示处理完毕不继续下一个插件处理,
-     *          `Matched`表示处理完毕并继续下一个插件处理,
      *          `NotMatch`表示未处理并继续下一个插件处理
      */
     open fun onPrivateMessage(bot: Bot, event: PrivateMessageEvent) = NotMatch
@@ -59,9 +59,18 @@ abstract class BotPlugin {
 
     open fun onLifecycleMeta(bot: Bot, event: LifecycleMetaEvent) = NotMatch
 
+    open fun onGuildMessage(bot: Bot, event: GuildMessageEvent) = NotMatch
+
+    open fun onMessageReactionsUpdatedNotice(bot: Bot, event: MessageReactionsUpdatedNoticeEvent) = NotMatch
+
+    open fun onChannelUpdatedNotice(bot: Bot, event: ChannelUpdatedNoticeEvent) = NotMatch
+
+    open fun onChannelCreatedNotice(bot: Bot, event: ChannelCreatedNoticeEvent) = NotMatch
+
+    open fun onChannelDestroyedNotice(bot: Bot, event: ChannelDestroyedNoticeEvent) = NotMatch
+
     companion object {
         const val MatchedAndBlock = 0
-        const val Matched = 1
-        const val NotMatch = 2
+        const val NotMatch = 1
     }
 }

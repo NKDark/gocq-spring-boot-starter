@@ -939,7 +939,7 @@ interface Bot {
             }
     }
 
-    fun getGuildMemberList(guildId: String, nextToken: String?): ApiData<GuildMetaByGuildData> {
+    fun getGuildMemberList(guildId: String, nextToken: String?): ApiData<GuildMemberListData> {
         val action = ApiEnum.GET_GUILD_MEMBER_LIST
 
         val params = JSONObject()
@@ -947,7 +947,7 @@ interface Bot {
         params["next_token"] = nextToken
 
         return apiHandler.sendApiMessage(botSession, action, params)
-            .to(object : TypeReference<ApiData<GuildMetaByGuildData>>() {})
+            .to(object : TypeReference<ApiData<GuildMemberListData>>() {})
     }
 
     fun getGuildMemberProfile(guildId: String, userId: String): ApiData<GuildMemberProfileData> {
@@ -973,7 +973,7 @@ interface Bot {
             .to(object : TypeReference<ApiData<GuildMessageRespData>>() {})
     }
 
-    fun getTopicChannelFeeds(guildId: String, channelId: String): ApiRawData? {
+    fun getTopicChannelFeeds(guildId: String, channelId: String): ApiData<FeedInfo>? {
         val action = ApiEnum.GET_TOPIC_CHANNEL_FEEDS
 
         val params = JSONObject()
@@ -982,13 +982,90 @@ interface Bot {
 
         apiHandler.sendApiMessage(botSession, action, params)
             .let {
-                return if (it["retdata"] == 0) {
-                    it.to(object : TypeReference<ApiRawData>() {})
+                return if (it["retcode"] == 0) {
+                    it.to(object : TypeReference<ApiData<FeedInfo>>() {})
                 } else {
                     log.error("getTopicChannelFeeds failed cause: ${it["msg"]}")
                     null
                 }
             }
+    }
+
+    fun deleteGuildRole(guildId: String, roleId: String): ApiRawData {
+        val action = ApiEnum.DELETE_GUILD_ROLE
+
+        val params = JSONObject()
+        params["guild_id"] = guildId
+        params["role_id"] = roleId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    fun getGuildMsg(messageId: String, noCache: Boolean): ApiData<GuildMsg> {
+        val action = ApiEnum.GET_GUILD_MSG
+
+        val params = JSONObject()
+        params["message_id"] = messageId
+        params["no_cache"] = noCache
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiData<GuildMsg>>() {})
+    }
+
+    fun getGuildRoles(guildId: String): ApiListData<GuildRole> {
+        val action = ApiEnum.GET_GUILD_ROLES
+
+        val params = JSONObject()
+        params["guild_id"] = guildId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiListData<GuildRole>>() {})
+    }
+
+    /**
+     * 设置用户在频道中的角色
+     * 文档怪怪的 不知道怎么用
+     */
+    fun setGuildMemberRole(guildId: String, set: Boolean = false, roleId: String, users: String = "array"): ApiRawData {
+        val action = ApiEnum.SET_GUILD_MEMBER_ROLE
+
+        val params = JSONObject()
+        params["guild_id"] = guildId
+        params["set"] = set
+        params["role_id"] = roleId
+        params["users"] = users
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    fun updateGuildRole(guildId: String, roleId: String, name: String, color: String): ApiRawData {
+        val action = ApiEnum.UPDATE_GUILD_ROLE
+
+        val params = JSONObject()
+        params["guild_id"] = guildId
+        params["role_id"] = roleId
+        params["name"] = name
+        params["color"] = color
+        params["independent"] = false
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    fun createGuildRole(guildId: String, color: String, name: String, initialUsers: List<String>): ApiData<GuildRoleData> {
+        val action = ApiEnum.CREATE_GUILD_ROLE
+
+        val params = JSONObject()
+        params["guild_id"] = guildId
+        params["name"] = name
+        params["color"] = color
+        params["independent"] = false
+        params["initial_users"] = initialUsers
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
     }
 
     @Throws(IOException::class, InterruptedException::class)

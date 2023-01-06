@@ -142,10 +142,13 @@ data class FeedMedia(
 
 interface IData
 
+@Suppress("unused")
 data class TextData(@JSONField(name = "text") val text: String) : IData
 
+@Suppress("unused")
 data class FaceData(@JSONField(name = "id") val id: String) : IData
 
+@Suppress("unused")
 data class AtData(
     /**
      * 目标ID
@@ -157,6 +160,7 @@ data class AtData(
     @JSONField(name = "qq") val qq: String,
 ) : IData
 
+@Suppress("unused")
 data class UrlQuoteData(
     /**
      * 显示文本
@@ -168,6 +172,7 @@ data class UrlQuoteData(
     @JSONField(name = "url") val url: String,
 ) : IData
 
+@Suppress("unused")
 data class ChannelQuoteData(
     /**
      * 显示文本
@@ -182,3 +187,28 @@ data class ChannelQuoteData(
      */
     @JSONField(name = "channel_id") val channelId: String,
 ) : IData
+
+data class GuildMsg(
+    @JSONField(name = "channel_id") val channelId: String,
+    @JSONField(name = "guild_id") val guildId: String,
+    @JSONField(name = "message") val message: String,
+    @JSONField(name = "message_id") val messageId: String,
+    @JSONField(name = "message_seq") val messageSeq: Long,
+    @JSONField(name = "message_source") val messageSource: String,
+    @JSONField(name = "reactions") val reactions: List<Any>,
+    @JSONField(name = "sender") val sender: Sender,
+    @JSONField(name = "time") val time: Long
+)
+
+data class GuildRole(
+    @JSONField(name = "argb_color") val argbColor: Long,
+    @JSONField(name = "disabled") val disabled: Boolean,
+    @JSONField(name = "independent") val independent: Boolean,
+    @JSONField(name = "max_count") val maxCount: Int,
+    @JSONField(name = "member_count") val memberCount: Int,
+    @JSONField(name = "owned") val owned: Boolean,
+    @JSONField(name = "role_id") val roleId: String,
+    @JSONField(name = "role_name") val roleName: String
+)
+
+data class GuildRoleData(@JSONField(name = "role_id") val roleId: Long)
