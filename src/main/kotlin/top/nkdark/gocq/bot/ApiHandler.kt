@@ -2,11 +2,13 @@ package top.nkdark.gocq.bot
 
 import com.alibaba.fastjson2.JSONObject
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
 import org.springframework.web.socket.WebSocketSession
 import top.nkdark.gocq.boot.BotProperties
 import java.io.IOException
 import java.util.concurrent.atomic.AtomicLong
 
+@Component
 class ApiHandler(private val botProperties: BotProperties) {
     private val log = LoggerFactory.getLogger(ApiHandler::class.java)
 
