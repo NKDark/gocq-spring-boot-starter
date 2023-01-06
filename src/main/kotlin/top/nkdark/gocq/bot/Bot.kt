@@ -824,6 +824,40 @@ interface Bot {
             .to(object : TypeReference<ApiListData<ModelShowRespData>>() {})
     }
 
+    /**
+     * 设置在线机型
+     *
+     * [示例](https://github.com/Mrs4s/go-cqhttp/pull/872#issuecomment-831180149)
+     *
+     * @param model     机型名称
+     * @param modelShow -
+     */
+    fun setModelShow(model: String, modelShow: String): ApiRawData {
+        val action = ApiEnum.SET_MODEL_SHOW
+
+        val params = JSONObject()
+        params["model"] = model
+        params["model_show"] = modelShow
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
+    /**
+     * 删除单向好友
+     *
+     * @param userId    单向好友QQ号
+     */
+    fun deleteUnidirectionalFriend(userId: Long): ApiRawData {
+        val action = ApiEnum.DELETE_UNIDIRECTIONAL_FRIEND
+
+        val params = JSONObject()
+        params["user_id"] = userId
+
+        return apiHandler.sendApiMessage(botSession, action, params)
+            .to(object : TypeReference<ApiRawData>() {})
+    }
+
     fun sendPrivateForwardMsg(userId: Long, messages: String): ApiData<MessageRespData>? {
         val action = ApiEnum.SEND_PRIVATE_FORWARD_MSG
 
