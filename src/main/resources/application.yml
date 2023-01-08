@@ -1,0 +1,7 @@
+server:
+  port: 11451
+
+spring:
+  bot:
+    plugin-list:
+      - com.example.bot.plugin.TestPlugin
