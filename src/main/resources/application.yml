@@ -1,0 +1,7 @@
+server:
+  port: 12345
+
+spring:
+  bot:
+    plugin-list:
+      - com.example.bot.plugin.TestPlugin
