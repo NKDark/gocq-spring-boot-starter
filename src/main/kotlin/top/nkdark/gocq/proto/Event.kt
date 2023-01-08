@@ -30,7 +30,7 @@ data class GroupMessageEvent(
     @JSONField(name = "message") val message: String,
     @JSONField(name = "raw_message") val rawMessage: String,
     @JSONField(name = "font") val font: Int,
-    @JSONField(name = "sender") val sender: GroupMessageSender,
+    @JSONField(name = "sender") val sender: IMessageSender,
 )
 
 /**
@@ -68,7 +68,7 @@ data class GroupUploadNoticeEvent(
     /**
      * 文件信息
      */
-    @JSONField(name = "file") val file: Long,
+    @JSONField(name = "file") val file: FileInfo,
 )
 
 /**

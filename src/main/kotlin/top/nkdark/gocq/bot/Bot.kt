@@ -7,6 +7,7 @@ import com.alibaba.fastjson2.TypeReference
 import com.alibaba.fastjson2.to
 import org.slf4j.Logger
 import org.springframework.web.socket.WebSocketSession
+import top.nkdark.gocq.*
 import top.nkdark.gocq.proto.*
 import top.nkdark.gocq.proto.guild.*
 import java.io.IOException
@@ -1054,7 +1055,12 @@ interface Bot {
             .to(object : TypeReference<ApiRawData>() {})
     }
 
-    fun createGuildRole(guildId: String, color: String, name: String, initialUsers: List<String>): ApiData<GuildRoleData> {
+    fun createGuildRole(
+        guildId: String,
+        color: String,
+        name: String,
+        initialUsers: List<String>
+    ): ApiData<GuildRoleData> {
         val action = ApiEnum.CREATE_GUILD_ROLE
 
         val params = JSONObject()

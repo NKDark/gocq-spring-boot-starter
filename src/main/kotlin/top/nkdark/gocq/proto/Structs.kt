@@ -1,7 +1,8 @@
+@file:Suppress("unused")
+
 package top.nkdark.gocq.proto
 
 import com.alibaba.fastjson2.annotation.JSONField
-import java.text.ParseException
 
 interface IMessageSender
 
@@ -134,49 +135,3 @@ data class Device(
      */
     @JSONField(name = "device_kind") val deviceKind: String,
 )
-
-class MessageType(s: String) {
-    private val messageType: EMessageType
-
-    init {
-        messageType = when (s) {
-            "private" -> EMessageType.Private
-            "group" -> EMessageType.Group
-            else -> throw ParseException("This field can only be `private` or `group`", 114514)
-        }
-    }
-
-    override fun toString(): String {
-        return messageType.toString()
-    }
-}
-
-enum class EMessageType(private val s: String) {
-    Private("private"),
-    Group("group");
-
-    override fun toString(): String {
-        return s
-    }
-}
-
-enum class EGroupRequestType(private val s: String) {
-    Add("add"),
-    Invite("invite");
-
-    override fun toString(): String {
-        return s
-    }
-}
-
-enum class EGroupHonorType(private val s: String) {
-    Talkative("talkative"),
-    Performer("performer"),
-    Legend("legend"),
-    StrongNewbie("strong_newbie"),
-    Emotion("emotion");
-
-    override fun toString(): String {
-        return s
-    }
-}
