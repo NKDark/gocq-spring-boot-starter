@@ -47,11 +47,12 @@ class BotWebSocketHandler(
 
             bot.botSession = session
 
-            val payloadJson = JSON.parseObject(message.payload)
-            if (payloadJson.containsKey("echo")) {
-                apiHandler.onReceiveApiMessage(payloadJson)
-            } else {
-                executor.execute { eventHandler.handle(bot, payloadJson) }
+            JSON.parseObject(message.payload).also { payloadJson ->
+                if (payloadJson.containsKey("echo")) {
+                    apiHandler.onReceiveApiMessage(payloadJson)
+                } else {
+                    executor.execute { eventHandler.handle(bot, payloadJson) }
+                }
             }
         }
     }
