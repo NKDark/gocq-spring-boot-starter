@@ -1,12 +1,20 @@
 # gocq-spring-boot-starter
 
-在下的群 [![QQ群](https://img.shields.io/static/v1?label=QQ%E7%BE%A4&message=793140364&color=blue)](https://jq.qq.com/?_wv=1027&k=gDfqoLIi)
-
+[![Maven Central](https://img.shields.io/maven-central/v/top.nkdark/gocq-spring-boot-starter?logo=apache-maven&logoColor=white)](https://search.maven.org/artifact/top.nkdark/gocq-spring-boot-starter)
+[![GitHub release](https://img.shields.io/github/release/NKDark/gocq-spring-boot-starter)](https://github.com/NKDark/gocq-spring-boot-starter/releases)
+[![Java support](https://img.shields.io/badge/Java-8+-green?logo=java&logoColor=white)](https://openjdk.java.net/)
+[![License](https://img.shields.io/github/license/NKDark/gocq-spring-boot-starter?color=4D7A97&logo=apache)](https://www.gnu.org/licenses/gpl-3.0.html)
+[![GitHub Stars](https://img.shields.io/github/stars/NKDark/gocq-spring-boot-starter)](https://github.com/NKDark/gocq-spring-boot-starter/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/NKDark/gocq-spring-boot-starter)](https://github.com/NKDark/gocq-spring-boot-starter/fork)
+[![user repos](https://badgen.net/github/dependents-repo/NKDark/gocq-spring-boot-starter?label=user%20repos)](https://github.com/NKDark/gocq-spring-boot-starter/network/dependents)
+[![GitHub Contributors](https://img.shields.io/github/contributors/NKDark/gocq-spring-boot-starter)](https://github.com/NKDark/gocq-spring-boot-starter/graphs/contributors)
+[![在下的QQ群](https://img.shields.io/static/v1?label=QQ%E7%BE%A4&message=793140364&color=blue)](https://jq.qq.com/?_wv=1027&k=gDfqoLIi)
+<!--[![Last SNAPSHOT](https://img.shields.io/nexus/snapshots/https/oss.sonatype.org/top.nkdark/gocq-spring-boot-starter?label=latest%20snapshot)](https://oss.sonatype.org/content/repositories/snapshots/top/nkdark/gocq-spring-boot-starter/)-->
 又一个基于 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp)、[SpringBoot](https://github.com/spring-projects/spring-boot)、反向websocket 的 QQ 机器人框架SDK
 
-对[lz](https://github.com/lz1998)的项目进行了拙劣的模仿
+对 [lz1998](https://github.com/lz1998) 的[项目](#reference)进行了拙劣的模仿
 
-lz的群 [![QQ群](https://img.shields.io/static/v1?label=QQ%E7%BE%A4&message=335783090&color=blue)](https://jq.qq.com/?_wv=1027&k=5BKAROL)
+<!--[lz1998](https://github.com/lz1998) 的群 [![lz1998 的QQ群](https://img.shields.io/static/v1?label=QQ%E7%BE%A4&message=335783090&color=blue)](https://jq.qq.com/?_wv=1027&k=5BKAROL)-->
 
 ### 本项目基于 [SpringBoot 2.7.7](https://github.com/spring-projects/spring-boot/tree/v2.7.7) 版本开发
 
@@ -220,7 +228,13 @@ mvn clean package
 java -jar xxx.jar
 ```
 
-# reference
+# Todo
+ - [x] [go-cqhttp Api](https://docs.go-cqhttp.org/api)
+ - [ ] 文档/注释
+ - [ ] 自定义合并消息的构建方法 (现在还得用户自行构建
+ - [ ] 测试全部api (希望小伙伴们都帮着测测
+
+# Reference
 > [pbbot-spring-boot-starter](https://github.com/ProtobufBot/pbbot-spring-boot-starter)
 > 
 > [Spring-CQ](https://github.com/lz1998/Spring-CQ/tree/jar)
