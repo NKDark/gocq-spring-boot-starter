@@ -15,7 +15,7 @@ data class PrivateMessageEvent(
     @JSONField(name = "raw_message") val rawMessage: String,
     @JSONField(name = "font") val font: Int,
     @JSONField(name = "sender") val sender: MessageSender,
-)
+) : IMessageEvent
 
 data class GroupMessageEvent(
     @JSONField(name = "time") val time: Long,
@@ -31,7 +31,7 @@ data class GroupMessageEvent(
     @JSONField(name = "raw_message") val rawMessage: String,
     @JSONField(name = "font") val font: Int,
     @JSONField(name = "sender") val sender: IMessageSender,
-)
+) : IMessageEvent
 
 /**
  * 群文件上传事件

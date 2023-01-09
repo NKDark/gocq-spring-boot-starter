@@ -4,6 +4,8 @@ package top.nkdark.gocq.proto
 
 import com.alibaba.fastjson2.annotation.JSONField
 
+interface IMessageEvent
+
 interface IMessageSender
 
 data class MessageSender(

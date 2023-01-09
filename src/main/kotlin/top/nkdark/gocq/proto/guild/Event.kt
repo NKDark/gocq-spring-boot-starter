@@ -1,6 +1,7 @@
 package top.nkdark.gocq.proto.guild
 
 import com.alibaba.fastjson2.annotation.JSONField
+import top.nkdark.gocq.proto.IMessageEvent
 
 
 data class GuildMessageEvent(
@@ -16,7 +17,7 @@ data class GuildMessageEvent(
     @JSONField(name = "sub_type") val subType: String,
     @JSONField(name = "time") val time: Long,
     @JSONField(name = "user_id") val userId: String,
-)
+) : IMessageEvent
 
 data class Sender(
     @JSONField(name = "nickname") val nickname: String,
