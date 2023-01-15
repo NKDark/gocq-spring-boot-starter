@@ -10,7 +10,7 @@
     </parent>
     <groupId>top.nkdark</groupId>
     <artifactId>gocq-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>gocq-spring-boot-starter</name>
     <description>A spingboot starter for go-cqhttp</description>
     <developers>
@@ -32,7 +32,7 @@
     </scm>
     <properties>
         <java.version>1.8</java.version>
-        <kotlin.version>1.7.21</kotlin.version>
+        <kotlin.version>1.7.22</kotlin.version>
         <dokka.version>1.7.20</dokka.version>
     </properties>
     <dependencies>
@@ -104,6 +104,27 @@
                         <version>${kotlin.version}</version>
                     </dependency>
                 </dependencies>
+                <executions>
+                    <execution>
+                        <id>kapt</id>
+                        <goals>
+                            <goal>kapt</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <sourceDir>src/main/kotlin</sourceDir>
+                                <sourceDir>src/main/java</sourceDir>
+                            </sourceDirs>
+                            <annotationProcessorPaths>
+                                <annotationProcessorPath>
+                                    <groupId>org.springframework.boot</groupId>
+                                    <artifactId>spring-boot-configuration-processor</artifactId>
+                                    <version>${parent.version}</version>
+                                </annotationProcessorPath>
+                            </annotationProcessorPaths>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
