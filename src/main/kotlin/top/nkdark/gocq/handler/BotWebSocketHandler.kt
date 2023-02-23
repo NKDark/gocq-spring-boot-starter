@@ -25,23 +25,24 @@ class BotWebSocketHandler(
     private val log = LoggerFactory.getLogger(BotWebSocketHandler::class.java)
 
     override fun afterConnectionEstablished(session: WebSocketSession) {
-        val xSelfId = session.handshakeHeaders["x-self-id"]?.get(0)?.toLong()
-        log.info("{} connected", xSelfId)
-        xSelfId?.let { uin ->
-            val bot = botFactory.createBot(uin, session)
-            botContainer.bots[uin] = bot
+        session.handshakeHeaders["x-self-id"]?.get(0)?.toLong()?.let { xSelfId ->
+            log.info("{} connected", xSelfId)
+            xSelfId.let { uin ->
+                val bot = botFactory.createBot(uin, session)
+                botContainer.bots[uin] = bot
+            }
         }
     }
 
     override fun afterConnectionClosed(session: WebSocketSession, status: CloseStatus) {
-        val xSelfId = session.handshakeHeaders["x-self-id"]?.get(0)?.toLong()
-        log.info("{} disconnected", xSelfId)
-        botContainer.bots.remove(xSelfId)
+        session.handshakeHeaders["x-self-id"]?.get(0)?.toLong()?.let { xSelfId ->
+            log.info("{} disconnected", xSelfId)
+            botContainer.bots.remove(xSelfId)
+        }
     }
 
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
-        val xSelfId = session.handshakeHeaders["x-self-id"]?.get(0)?.toLong()
-        xSelfId?.let { uin ->
+        session.handshakeHeaders["x-self-id"]?.get(0)?.toLong()?.let { uin ->
             val bot: Bot = botContainer.bots[uin]
                 ?: botFactory.createBot(uin, session).also { botContainer.bots[uin] = it }
 
